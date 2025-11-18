@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Incidentes Técnicos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: linear-gradient(145deg, #1a1a1a 0%, #2a0000 100%);
+            border: 1px solid #ff0000;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(255, 0, 0, 0.2);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #cc0000;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #ff3333;
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        .header p {
+            color: #999;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #ff6666;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="datetime-local"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: #0d0d0d;
+            border: 1px solid #660000;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #ff0000;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        select option {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        .priority-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .priority-option {
+            flex: 1;
+        }
+
+        .priority-option input[type="radio"] {
+            display: none;
+        }
+
+        .priority-label {
+            display: block;
+            padding: 10px;
+            background: #0d0d0d;
+            border: 2px solid #660000;
+            border-radius: 8px;
+            text-align: center;
+            color: #999;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .priority-option input[type="radio"]:checked + .priority-label {
+            border-color: #ff0000;
+            background: #330000;
+            color: #ff6666;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #cc0000 0%, #660000 100%);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+            box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .required {
+            color: #ff0000;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .priority-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚠️ Reporte de Incidentes Técnicos</h1>
+            <p>Complete el formulario con los detalles del incidente</p>
+        </div>
+
+        <form action="logica.php" method="POST">
+            <div class="form-group">
+                <label for="nombre">Nombre Completo <span class="required">*</span></label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Correo Electrónico <span class="required">*</span></label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="departamento">Departamento <span class="required">*</span></label>
+                <select id="departamento" name="departamento" required>
+                    <option value="">Seleccione un departamento</option>
+                    <option value="ti">Tecnología de la Información</option>
+                    <option value="desarrollo">Desarrollo</option>
+                    <option value="soporte">Soporte Técnico</option>
+                    <option value="infraestructura">Infraestructura</option>
+                    <option value="operaciones">Operaciones</option>
+                    <option value="otro">Otro</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Prioridad <span class="required">*</span></label>
+                <div class="priority-group">
+                    <div class="priority-option">
+                        <input type="radio" id="baja" name="prioridad" value="baja" required>
+                        <label for="baja" class="priority-label">Baja</label>
+                    </div>
+                    <div class="priority-option">
+                        <input type="radio" id="media" name="prioridad" value="media">
+                        <label for="media" class="priority-label">Media</label>
+                    </div>
+                    <div class="priority-option">
+                        <input type="radio" id="alta" name="prioridad" value="alta">
+                        <label for="alta" class="priority-label">Alta</label>
+                    </div>
+                    <div class="priority-option">
+                        <input type="radio" id="critica" name="prioridad" value="critica">
+                        <label for="critica" class="priority-label">Crítica</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="tipo_incidente">Tipo de Incidente <span class="required">*</span></label>
+                <select id="tipo_incidente" name="tipo_incidente" required>
+                    <option value="">Seleccione un tipo</option>
+                    <option value="hardware">Fallo de Hardware</option>
+                    <option value="software">Error de Software</option>
+                    <option value="red">Problema de Red</option>
+                    <option value="seguridad">Seguridad</option>
+                    <option value="acceso">Acceso/Permisos</option>
+                    <option value="datos">Pérdida de Datos</option>
+                    <option value="otro">Otro</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="titulo">Título del Incidente <span class="required">*</span></label>
+                <input type="text" id="titulo" name="titulo" placeholder="Resumen breve del problema" required>
+            </div>
+
+            <div class="form-group">
+                <label for="descripcion">Descripción Detallada <span class="required">*</span></label>
+                <textarea id="descripcion" name="descripcion" placeholder="Describa el incidente con el mayor detalle posible..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="impacto">Impacto en las Operaciones</label>
+                <textarea id="impacto" name="impacto" placeholder="¿Cómo afecta este incidente a las operaciones?"></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Enviar Reporte</button>
+        </form>
+    </div>
+</body>
+</html>
