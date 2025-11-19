@@ -144,21 +144,27 @@ try
     
     foreach ($consulta as $fila) {
         // Determinar clase de prioridad
-        $clasePrioridad = "prioridad-" . strtolower($fila["prioridad"]);
-        $prioridadTexto = ucfirst($fila["prioridad"]);
+        $clasePrioridad = !empty($fila["prioridad"]) 
+            ? "prioridad-" . strtolower($fila["prioridad"]) 
+            : "prioridad-desconocida";
+        $prioridadTexto = !empty($fila["prioridad"]) 
+            ? ucfirst($fila["prioridad"]) 
+            : "N/A";
         
         // Formatear fecha
-        $fechaIncidente = date('d/m/Y H:i', strtotime($fila["fecha_incidente"]));
+        $fechaIncidente = !empty($fila["fecha_incidente"]) 
+            ? date('d/m/Y H:i', strtotime($fila["fecha_incidente"])) 
+            : "Sin fecha";
         
         echo "<tr>";
         echo "<td style='font-family:monospace;color:#ff6666;'>". substr($fila["_id"], -8) ."</td>";
         echo "<td>". $fechaIncidente ."</td>";
         echo "<td class='$clasePrioridad'>". $prioridadTexto ."</td>";
-        echo "<td>". ucfirst($fila["tipo_incidente"]) ."</td>";
+        echo "<td>". (!empty($fila["tipo_incidente"]) ? ucfirst($fila["tipo_incidente"]) : "N/A") ."</td>";
         echo "<td style='font-weight:600;color:#fff;'>". $fila["titulo"] ."</td>";
         echo "<td>". $fila["nombre"] ."</td>";
-        echo "<td>". ucfirst($fila["departamento"]) ."</td>";
-        echo "<td class='descripcion-corta' title='". htmlspecialchars($fila["descripcion"]) ."'>". $fila["descripcion"] ."</td>";
+        echo "<td>". (!empty($fila["departamento"]) ? ucfirst($fila["departamento"]) : "N/A") ."</td>";
+        echo "<td class='descripcion-corta' title='". (!empty($fila["descripcion"]) ? htmlspecialchars($fila["descripcion"]) : "") ."'>". (!empty($fila["descripcion"]) ? $fila["descripcion"] : "Sin descripción") ."</td>";
         echo "<td><span class='estado-pendiente'>". $fila["estado"] ."</span></td>";
         echo "</tr>";
     }
