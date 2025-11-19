@@ -38,7 +38,7 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
 # Definir variable de entorno para conexión a MongoDB (se sobreescribe en Render)
-ENV MONGO_URI="mongodb+srv://usuario:password@cluster0.mongodb.net/?appName=Cluster0"
+ENV MONGO_URI="mongodb+srv://maurosebassj_db_user:9Cu3bpNbGxVRr3ic@cluster0.zns6oj7.mongodb.net/?appName=Cluster0"
 
 # Exponer puerto
 EXPOSE 80
