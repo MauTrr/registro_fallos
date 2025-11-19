@@ -4,7 +4,7 @@ require 'vendor/autoload.php'; // Cargar Composer
 try 
 {
     // Conexión al servidor MongoDB
-    $cliente = new MongoDB\Client("mongodb+srv://maurosebassj_db_user:9Cu3bpNbGxVRr3ic@cluster0.zns6oj7.mongodb.net/?appName=Cluster0");
+    $cliente = new MongoDB\Client(getenv("MONGO_URI"));
     
     $db = $cliente->reportes_tecnicos;
     $coleccion = $db->incidentes;

@@ -1,11 +1,15 @@
 # Imagen base oficial de PHP con Apache
 FROM php:8.2-apache
 
-# Instalar dependencias necesarias y limpiar cache
+# Instalar dependencias necesarias para compilar extensiones y limpiar cache
 RUN apt-get update && apt-get install -y \
-    libssl-dev \
     git \
     unzip \
+    pkg-config \
+    libssl-dev \
+    libcurl4-openssl-dev \
+    libz-dev \
+    build-essential \
     && pecl install mongodb \
     && docker-php-ext-enable mongodb \
     && apt-get clean \
@@ -20,18 +24,21 @@ RUN a2enmod rewrite
 # Copiar configuración personalizada de Apache
 COPY apache-config.conf /etc/apache2/sites-available/000-default.conf
 
-# Copiar solo archivos necesarios (evita copiar .git, node_modules, etc.)
+# Copiar tu proyecto al contenedor
 COPY . /var/www/html/
 
 # Establecer directorio de trabajo
 WORKDIR /var/www/html
 
-# Instalar dependencias de Composer en producción
+# Instalar dependencias de Composer en modo producción
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
 # Ajustar permisos (seguridad)
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
+
+# Definir variable de entorno para conexión a MongoDB (se sobreescribe en Render)
+ENV MONGO_URI="mongodb+srv://usuario:password@cluster0.mongodb.net/?appName=Cluster0"
 
 # Exponer puerto
 EXPOSE 80
